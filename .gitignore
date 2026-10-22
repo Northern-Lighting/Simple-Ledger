@@ -1,0 +1,47 @@
+# 1. 编译产物 (Build & Output)
+/build/
+/app/build/
+/app/release/
+/captures/
+*.apk
+*.apk.idsig
+*.aab
+*.hprof
+hs_err_pid*
+*.class
+
+# 2. 本地环境与缓存 (Local & Cache)
+local.properties
+.gradle/
+.gradle-cache/
+.kotlin/
+.externalNativeBuild/
+.cxx/
+.navigation/
+*.log
+build.txt
+
+# 3. IDE 配置文件 (IDE Files)
+*.iml
+.idea/
+.vscode/
+.fleet/
+*.hprof.index
+*.swp
+*~
+
+# 4. 签名与密钥（安全红线，绝对不能上传）
+keystore/
+keystore.properties
+*.jks
+*.keystore
+*.bks
+*.p12
+*.pem
+*.key
+secrets.properties
+
+# 5. 系统杂项 (OS Files)
+.DS_Store
+Thumbs.db
+desktop.ini
