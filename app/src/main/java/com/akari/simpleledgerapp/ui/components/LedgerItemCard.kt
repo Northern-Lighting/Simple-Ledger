@@ -84,6 +84,9 @@ private val MenuIconInset = 12.dp
 
 val LedgerCardCornerRadius = 16.dp
 private const val CornerAnimationMillis = 200
+private const val MenuButtonFadeInMillis = 120
+private const val MenuButtonFadeInDelayMillis = 130
+private const val MenuButtonFadeOutMillis = 80
 
 @Immutable
 data class LedgerCardCorners(
@@ -254,17 +257,21 @@ fun LedgerItemCard(
                         )
                         Spacer(Modifier.width(4.dp))
                     }
-                    if (!selectionMode && editAction != null && deleteAction != null) {
-                        ItemMenuButton(onEdit = editAction, onDelete = deleteAction)
+                    AnimatedVisibility(
+                        visible = !selectionMode && editAction != null && deleteAction != null,
+                        enter = fadeIn(
+                            animationSpec = tween(durationMillis = MenuButtonFadeInMillis, delayMillis = MenuButtonFadeInDelayMillis),
+                        ),
+                        exit = fadeOut(animationSpec = tween(durationMillis = MenuButtonFadeOutMillis)),
+                    ) {
+                        if (editAction != null && deleteAction != null) {
+                            ItemMenuButton(onEdit = editAction, onDelete = deleteAction)
+                        }
                     }
                 }
             }
-            if (selectionMode) {
-                LookaheadScope {
-                    rowContent(Modifier.animateBounds(this@LookaheadScope))
-                }
-            } else {
-                rowContent(Modifier)
+            LookaheadScope {
+                rowContent(Modifier.animateBounds(this@LookaheadScope))
             }
             Column(modifier = Modifier.padding(end = 8.dp)) {
                 Text(

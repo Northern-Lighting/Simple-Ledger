@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
@@ -49,6 +50,7 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     val appIcon = remember(context) {
         runCatching {
             val drawable = context.packageManager.getApplicationIcon(context.packageName)
@@ -136,7 +138,7 @@ fun SettingsScreen(
         SettingsTextRow(
             title = stringResource(R.string.settings_project_url),
             supportingText = stringResource(R.string.settings_view_on_github),
-            onClick = null,
+            onClick = { uriHandler.openUri(ProjectUrl) },
         )
         Spacer(Modifier.height(32.dp))
     }
@@ -281,6 +283,7 @@ private fun languageLabelRes(language: LanguageMode): Int = when (language) {
     LanguageMode.SimplifiedChinese -> R.string.language_simplified_chinese
 }
 
+private const val ProjectUrl = "https://github.com/Northern-Lighting/Simple-Ledger/tree/main"
 private val AppIconSize = 88.dp
 private val SettingsHorizontalPadding = 24.dp
 

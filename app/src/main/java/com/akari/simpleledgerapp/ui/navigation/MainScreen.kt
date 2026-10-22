@@ -10,6 +10,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -68,10 +70,11 @@ import com.akari.simpleledgerapp.ui.pages.HistoryLedgerScreen
 import com.akari.simpleledgerapp.ui.pages.SettingsScreen
 
 private const val BarFadeDuration = 180
+private const val PageEnterScale = 0.92f
 private const val BarEnterColorDuration = 225
 private const val BarExitColorDuration = 195
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun MainScreen(
     ledgerViewModel: LedgerViewModel,
@@ -228,9 +231,20 @@ fun MainScreen(
         }
 
         Box(modifier = Modifier.padding(innerPadding)) {
+            val motionScheme = MaterialTheme.motionScheme
             AnimatedContent(
                 targetState = destination,
-                transitionSpec = { fadeThrough() },
+                transitionSpec = {
+                    (
+                        fadeIn(animationSpec = motionScheme.fastEffectsSpec<Float>()) +
+                            scaleIn(
+                                animationSpec = motionScheme.defaultSpatialSpec<Float>(),
+                                initialScale = PageEnterScale,
+                            )
+                        ).togetherWith(
+                        fadeOut(animationSpec = motionScheme.fastEffectsSpec<Float>()),
+                    )
+                },
                 label = "pageTransition",
             ) { target ->
                 when (target) {
