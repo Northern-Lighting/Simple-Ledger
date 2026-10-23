@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +31,7 @@ class MainActivity : ComponentActivity() {
 
     private val ledgerViewModel: LedgerViewModel by viewModels()
     private val settingsStore by lazy { SettingsStore(applicationContext) }
+    private val baseConfiguration by lazy { Configuration(resources.configuration) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +60,9 @@ class MainActivity : ComponentActivity() {
                     LanguageMode.English -> localizedContext(baseContext, Locale.ENGLISH)
                 }
             }
+            LaunchedEffect(settings.language) {
+                applyActivityLocale(settings.language)
+            }
             CompositionLocalProvider(
                 LocalContext provides localeContext,
                 LocalConfiguration provides localeContext.resources.configuration,
@@ -85,5 +90,20 @@ class MainActivity : ComponentActivity() {
         val configuration = Configuration(base.resources.configuration)
         configuration.setLocale(locale)
         return base.createConfigurationContext(configuration)
+    }
+
+    private fun applyActivityLocale(mode: LanguageMode) {
+        val locale = when (mode) {
+            LanguageMode.System -> null
+            LanguageMode.SimplifiedChinese -> Locale.SIMPLIFIED_CHINESE
+            LanguageMode.TraditionalChinese -> Locale.TRADITIONAL_CHINESE
+            LanguageMode.English -> Locale.ENGLISH
+        }
+        val configuration = Configuration(baseConfiguration)
+        if (locale != null) {
+            configuration.setLocale(locale)
+        }
+        @Suppress("DEPRECATION")
+        resources.updateConfiguration(configuration, resources.displayMetrics)
     }
 }

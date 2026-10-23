@@ -1,6 +1,5 @@
 package com.akari.simpleledgerapp.ui.components
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -12,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.akari.simpleledgerapp.R
 import com.akari.simpleledgerapp.background.LedgerTag
+import com.akari.simpleledgerapp.ui.theme.LocalIsDarkTheme
 
 data class LedgerTagColors(val container: Color, val content: Color)
 
@@ -24,7 +24,7 @@ private val OtherDark = LedgerTagColors(Color(0xFF3A2A18), Color(0xFFF0C79A))
 
 @Composable
 fun ledgerTagColors(tag: LedgerTag): LedgerTagColors {
-    val dark = isSystemInDarkTheme()
+    val dark = LocalIsDarkTheme.current
     return when (tag) {
         LedgerTag.WeChat -> if (dark) WeChatDark else WeChatLight
         LedgerTag.Alipay -> if (dark) AlipayDark else AlipayLight

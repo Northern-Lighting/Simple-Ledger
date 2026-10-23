@@ -15,6 +15,8 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +38,8 @@ private val LightColorScheme = lightColorScheme(
     tertiary = Pink40
 )
 
+val LocalIsDarkTheme = compositionLocalOf { false }
+
 private const val ThemeFadeMillis = 320
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -56,11 +60,13 @@ fun SimpleLedgerAppTheme(
     }
 
     ThemeFadeOverlay(colorScheme = colorScheme) {
-        MaterialExpressiveTheme(
-            colorScheme = colorScheme,
-            typography = Typography,
-            content = content
-        )
+        CompositionLocalProvider(LocalIsDarkTheme provides darkTheme) {
+            MaterialExpressiveTheme(
+                colorScheme = colorScheme,
+                typography = Typography,
+                content = content
+            )
+        }
     }
 }
 
