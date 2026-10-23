@@ -53,11 +53,9 @@ class MainActivity : ComponentActivity() {
             val localeContext = remember(settings.language, baseContext) {
                 when (settings.language) {
                     LanguageMode.System -> baseContext
-                    LanguageMode.SimplifiedChinese -> {
-                        val configuration = Configuration(baseContext.resources.configuration)
-                        configuration.setLocale(Locale.SIMPLIFIED_CHINESE)
-                        baseContext.createConfigurationContext(configuration)
-                    }
+                    LanguageMode.SimplifiedChinese -> localizedContext(baseContext, Locale.SIMPLIFIED_CHINESE)
+                    LanguageMode.TraditionalChinese -> localizedContext(baseContext, Locale.TRADITIONAL_CHINESE)
+                    LanguageMode.English -> localizedContext(baseContext, Locale.ENGLISH)
                 }
             }
             CompositionLocalProvider(
@@ -81,5 +79,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun localizedContext(base: android.content.Context, locale: Locale): android.content.Context {
+        val configuration = Configuration(base.resources.configuration)
+        configuration.setLocale(locale)
+        return base.createConfigurationContext(configuration)
     }
 }

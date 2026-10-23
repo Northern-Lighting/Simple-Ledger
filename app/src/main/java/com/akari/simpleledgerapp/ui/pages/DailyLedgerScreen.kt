@@ -82,6 +82,7 @@ import com.akari.simpleledgerapp.ui.components.BottomRoundedCardCorners
 import com.akari.simpleledgerapp.ui.components.FlatCardCorners
 import com.akari.simpleledgerapp.ui.components.LedgerCardCorners
 import com.akari.simpleledgerapp.ui.components.LedgerEmptyHint
+import com.akari.simpleledgerapp.ui.components.ledgerDateText
 import com.akari.simpleledgerapp.ui.components.LedgerEntryDialog
 import com.akari.simpleledgerapp.ui.components.LedgerItemCard
 import com.akari.simpleledgerapp.ui.components.LedgerSelectionState
@@ -388,7 +389,7 @@ private fun DateHeader(
             text = if (date == LocalDate.now()) {
                 stringResource(R.string.date_today)
             } else {
-                LedgerFormat.dateText(date)
+                ledgerDateText(date)
             },
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,

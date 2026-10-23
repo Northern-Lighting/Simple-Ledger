@@ -335,7 +335,7 @@ fun LedgerEntryDialog(
                         ) {
                             Box(modifier = Modifier.weight(1f)) {
                                 OutlinedTextField(
-                                    value = LedgerFormat.shortDateText(selectedDate),
+                                    value = ledgerShortDateText(selectedDate),
                                     onValueChange = {},
                                     readOnly = true,
                                     singleLine = true,

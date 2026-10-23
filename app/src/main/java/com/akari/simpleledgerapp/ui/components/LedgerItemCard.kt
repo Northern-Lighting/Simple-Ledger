@@ -242,7 +242,7 @@ fun LedgerItemCard(
                             if (date == LocalDate.now()) {
                                 stringResource(R.string.date_today)
                             } else {
-                                LedgerFormat.dateText(date)
+                                ledgerDateText(date)
                             }
                         } else {
                             null

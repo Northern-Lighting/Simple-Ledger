@@ -20,7 +20,11 @@ fun AddLedgerFab(
 ) {
     if (extended) {
         ExtendedFloatingActionButton(
-            text = { Text(stringResource(R.string.add_ledger_entry)) },
+            text = {
+                Text(
+                    text = stringResource(R.string.add_ledger_entry),
+                )
+            },
             icon = {
                 Icon(
                     imageVector = Icons.Filled.Add,

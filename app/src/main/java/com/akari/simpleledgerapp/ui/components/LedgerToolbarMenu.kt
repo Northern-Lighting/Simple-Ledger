@@ -1,21 +1,22 @@
 package com.akari.simpleledgerapp.ui.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.ArrowRight
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.FileDownload
 import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.Insights
+import androidx.compose.material.icons.outlined.SelectAll
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MenuDefaults
@@ -37,6 +38,7 @@ private val ToolbarMenuMinWidth = 112.dp
 private val ToolbarMenuMaxWidth = 280.dp
 private val ToolbarMenuPreferredWidth = 180.dp
 private val ToolbarMenuScreenMargin = 16.dp
+private val ToolbarMenuGroupGap = 4.dp
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -48,6 +50,7 @@ fun LedgerToolbarMenu(
     onReversedChange: (Boolean) -> Unit,
     onGroupByDateChange: (Boolean) -> Unit,
     onFilterClick: () -> Unit,
+    onImportClick: () -> Unit,
     onSelectAllClick: () -> Unit,
     onAnalysisClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -76,7 +79,7 @@ fun LedgerToolbarMenu(
                 .width(menuWidth),
         ) {
             DropdownMenuGroup(
-                shapes = MenuDefaults.groupShape(index = 0, count = 1),
+                shapes = MenuDefaults.groupShape(index = 0, count = 2),
                 containerColor = MenuDefaults.groupVibrantContainerColor,
             ) {
                 DropdownMenuItem(
@@ -89,7 +92,7 @@ fun LedgerToolbarMenu(
                     colors = MenuDefaults.itemVibrantColors(),
                     trailingContent = {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowRight,
                             contentDescription = null,
                             modifier = Modifier.size(MenuDefaults.TrailingIconSize),
                         )
@@ -112,12 +115,28 @@ fun LedgerToolbarMenu(
                     },
                 )
                 DropdownMenuItem(
+                    text = { Text(stringResource(R.string.import_ledger)) },
+                    onClick = {
+                        expanded = false
+                        onImportClick()
+                    },
+                    shape = MenuDefaults.itemShape(index = 2, count = 4).shape,
+                    colors = MenuDefaults.itemVibrantColors(),
+                    trailingContent = {
+                        Icon(
+                            imageVector = Icons.Outlined.FileDownload,
+                            contentDescription = null,
+                            modifier = Modifier.size(MenuDefaults.TrailingIconSize),
+                        )
+                    },
+                )
+                DropdownMenuItem(
                     text = { Text(stringResource(R.string.analysis)) },
                     onClick = {
                         expanded = false
                         onAnalysisClick()
                     },
-                    shape = MenuDefaults.itemShape(index = 2, count = 4).shape,
+                    shape = MenuDefaults.itemShape(index = 3, count = 4).shape,
                     colors = MenuDefaults.itemVibrantColors(),
                     trailingContent = {
                         Icon(
@@ -127,18 +146,26 @@ fun LedgerToolbarMenu(
                         )
                     },
                 )
-                HorizontalDivider(modifier = Modifier.padding(MenuDefaults.HorizontalDividerPadding))
+            }
+
+            Spacer(modifier = Modifier.height(ToolbarMenuGroupGap))
+
+            val selectAllGroupShapes = MenuDefaults.groupShape(index = 1, count = 2)
+            DropdownMenuGroup(
+                shapes = selectAllGroupShapes,
+                containerColor = MenuDefaults.groupVibrantContainerColor,
+            ) {
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.select_all)) },
                     onClick = {
                         expanded = false
                         onSelectAllClick()
                     },
-                    shape = MenuDefaults.itemShape(index = 3, count = 4).shape,
+                    shape = selectAllGroupShapes.shape,
                     colors = MenuDefaults.itemVibrantColors(),
                     trailingContent = {
                         Icon(
-                            imageVector = Icons.Outlined.CheckCircle,
+                            imageVector = Icons.Outlined.SelectAll,
                             contentDescription = null,
                             modifier = Modifier.size(MenuDefaults.TrailingIconSize),
                         )

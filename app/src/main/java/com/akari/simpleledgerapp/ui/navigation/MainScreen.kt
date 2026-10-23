@@ -62,6 +62,7 @@ import com.akari.simpleledgerapp.background.LedgerItem
 import com.akari.simpleledgerapp.background.LedgerViewModel
 import com.akari.simpleledgerapp.ui.components.LedgerAnalysisDialog
 import com.akari.simpleledgerapp.ui.components.LedgerFilterDialog
+import com.akari.simpleledgerapp.ui.components.LedgerImportDialog
 import com.akari.simpleledgerapp.ui.components.LedgerToolbarMenu
 import com.akari.simpleledgerapp.ui.components.fadeThrough
 import com.akari.simpleledgerapp.ui.components.rememberLedgerSelection
@@ -90,6 +91,7 @@ fun MainScreen(
     var groupByDate by rememberSaveable { mutableStateOf(true) }
     var showFilterDialog by remember { mutableStateOf(false) }
     var showAnalysisDialog by remember { mutableStateOf(false) }
+    var showImportDialog by remember { mutableStateOf(false) }
     var tagFilters by remember { mutableStateOf(LedgerTagFilter.entries.toSet()) }
     val destination = TopLevelDestination.entries[selectedIndex]
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -195,6 +197,7 @@ fun MainScreen(
                             onReversedChange = { sortReversed = it },
                             onGroupByDateChange = { groupByDate = it },
                             onFilterClick = { showFilterDialog = true },
+                            onImportClick = { showImportDialog = true },
                             onSelectAllClick = { selection.selectAll() },
                             onAnalysisClick = { showAnalysisDialog = true },
                             scrollBehavior = activeScrollBehavior,
@@ -291,6 +294,10 @@ fun MainScreen(
         )
     }
 
+    if (showImportDialog) {
+        LedgerImportDialog(onDismiss = { showImportDialog = false })
+    }
+
     if (showAnalysisDialog) {
         LedgerAnalysisDialog(onDismiss = { showAnalysisDialog = false })
     }
@@ -309,6 +316,7 @@ private fun DefaultTopBar(
     onReversedChange: (Boolean) -> Unit,
     onGroupByDateChange: (Boolean) -> Unit,
     onFilterClick: () -> Unit,
+    onImportClick: () -> Unit,
     onSelectAllClick: () -> Unit,
     onAnalysisClick: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior?,
@@ -345,6 +353,7 @@ private fun DefaultTopBar(
                         onReversedChange = onReversedChange,
                         onGroupByDateChange = onGroupByDateChange,
                         onFilterClick = onFilterClick,
+                        onImportClick = onImportClick,
                         onSelectAllClick = onSelectAllClick,
                         onAnalysisClick = onAnalysisClick,
                     )

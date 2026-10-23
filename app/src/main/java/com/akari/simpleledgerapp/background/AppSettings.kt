@@ -6,7 +6,7 @@ enum class ThemeMode { System, AlwaysDark, AlwaysLight }
 
 enum class HomeStyle { List, Calendar }
 
-enum class LanguageMode { System, SimplifiedChinese }
+enum class LanguageMode { System, SimplifiedChinese, TraditionalChinese, English }
 
 data class AppSettings(
     val themeMode: ThemeMode = ThemeMode.System,

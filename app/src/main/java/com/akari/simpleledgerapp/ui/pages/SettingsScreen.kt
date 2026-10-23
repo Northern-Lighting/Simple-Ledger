@@ -122,9 +122,6 @@ fun SettingsScreen(
             selected = settings.homeStyle,
             onSelect = { onSettingsChange(settings.copy(homeStyle = it)) },
         )
-
-        Spacer(Modifier.height(16.dp))
-        SettingsSectionHeader(stringResource(R.string.settings_section_language))
         SettingsOptionRow(
             title = stringResource(R.string.settings_section_language),
             value = stringResource(languageLabelRes(settings.language)),
@@ -281,6 +278,8 @@ private fun homeStyleLabelRes(style: HomeStyle): Int = when (style) {
 private fun languageLabelRes(language: LanguageMode): Int = when (language) {
     LanguageMode.System -> R.string.language_follow_system
     LanguageMode.SimplifiedChinese -> R.string.language_simplified_chinese
+    LanguageMode.TraditionalChinese -> R.string.language_traditional_chinese
+    LanguageMode.English -> R.string.language_english
 }
 
 private const val ProjectUrl = "https://github.com/Northern-Lighting/Simple-Ledger/tree/main"
