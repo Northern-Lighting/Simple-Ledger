@@ -32,6 +32,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilterChip
@@ -46,7 +47,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimeInput
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -509,7 +510,7 @@ fun LedgerEntryDialog(
 
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = selectedDate.toEpochDay() * MillisPerDay,
+            initialSelectedDateMillis = selectedDate.toEpochDay() * MillisPerDay
         )
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
@@ -557,7 +558,7 @@ fun LedgerEntryDialog(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Spacer(Modifier.height(16.dp))
-                    TimePicker(state = timePickerState)
+                    TimeInput(state = timePickerState)
                     Row(modifier = Modifier.align(Alignment.End)) {
                         TextButton(onClick = { showTimePicker = false }) {
                             Text(cancelMessage)
